@@ -1,9 +1,24 @@
 import os
 import nltk
 import nltk.corpus
+from nltk.tokenize import word_tokenize
+
 import google.auth
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-text = input("Ask about your: enrolled courses, ")
-print(text)
+userQuery = input("Ask about your: enrolled courses, ")
+
+#hamlet=nltk.corpus.gutenberg.words('shakespeare-hamlet.txt')
+#print(hamlet[:20])
+
+userQueryTokenized = word_tokenize(userQuery)
+
+print("tokenized info:")
+print(userQueryTokenized[:20])
+print(type(userQueryTokenized))
+print(len(userQueryTokenized))
+print("end of tokenized info")
+
+def listCompare():
+    pass
