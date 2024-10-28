@@ -7,7 +7,12 @@ import google.auth
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+#things to ask
+enrolledCourses = ["what", "courses", "am", "i", "enrolled", "in"]
+
 userQuery = input("Ask about your: enrolled courses, ")
+print("userQuery is" + userQuery)
+
 
 #hamlet=nltk.corpus.gutenberg.words('shakespeare-hamlet.txt')
 #print(hamlet[:20])
@@ -21,4 +26,36 @@ print(len(userQueryTokenized))
 print("end of tokenized info")
 
 def listCompare():
-    pass
+    for x in len(userQueryTokenized):
+        if userQueryTokenized[curInc] == enrolledCourses[curPlc]:
+            curInc = curInc + 1
+            sameToken = sameToken + 1
+        if userQueryTokenized[curInc] != enrolledCourses[curPlc]:
+            curInc = curInc + 1
+
+        x = x + 1
+
+
+
+
+
+def enrolledCoursesAPIcall():
+    creds, _ = google.auth.default()
+
+    try:
+        service = build('classroom', 'v1', credentials=creds)
+
+        # Call the Classroom API
+        results = service.courses().list(pageSize=10).execute()
+        courses = results.get('courses', [])
+
+        if not courses:
+            print('No courses found.')
+            return
+
+        print('Courses:')
+        for course in courses:
+            print(course['name'])
+
+    except HttpError as error:
+        print(f'An error occurred: {error}')
