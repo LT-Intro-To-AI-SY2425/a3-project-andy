@@ -1,0 +1,9 @@
+import os
+import nltk
+import nltk.corpus
+import google.auth
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+
+text = input("Ask about your: enrolled courses, ")
+print(text)
