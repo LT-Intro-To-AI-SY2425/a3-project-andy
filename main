@@ -25,17 +25,38 @@ print(type(userQueryTokenized))
 print(len(userQueryTokenized))
 print("end of tokenized info")
 
-def listCompare():
-    for x in len(userQueryTokenized):
+#def listCompare():
+#    for x in len(userQueryTokenized):
+#        if userQueryTokenized[curInc] == enrolledCourses[curPlc]:
+#            curInc = curInc + 1
+#            sameToken = sameToken + 1
+#        if userQueryTokenized[curInc] != enrolledCourses[curPlc]:
+#            curInc = curInc + 1
+#
+#        x = x + 1
+
+
+def list_compare(userQueryTokenized, enrolledCourses):
+    sameToken = 0  # Init important stuff
+    curInc = 0
+    curPlc = 0
+    
+    # Loop through userQueryTokenized
+    while curInc < len(userQueryTokenized) and curPlc < len(enrolledCourses):
         if userQueryTokenized[curInc] == enrolledCourses[curPlc]:
-            curInc = curInc + 1
-            sameToken = sameToken + 1
-        if userQueryTokenized[curInc] != enrolledCourses[curPlc]:
-            curInc = curInc + 1
-
-        x = x + 1
-
-
+            sameToken += 1  # Increment sameToken for each match
+        curPlc += 1  # Move to the next element in enrolledCourses
+        
+        # If end of enrolledCourses is reached, move to next in userQueryTokenized
+        if curPlc == len(enrolledCourses):
+            curPlc = 0
+            curInc += 1
+    
+    # Calculate the match percentage
+    total_comparisons = min(len(userQueryTokenized), len(enrolledCourses))
+    match_percentage = (sameToken / total_comparisons) * 100 if total_comparisons > 0 else 0
+    
+    return match_percentage
 
 
 
@@ -52,10 +73,10 @@ def enrolledCoursesAPIcall():
         if not courses:
             print('No courses found.')
             return
-
+            
         print('Courses:')
         for course in courses:
             print(course['name'])
-
+# :(
     except HttpError as error:
         print(f'An error occurred: {error}')
